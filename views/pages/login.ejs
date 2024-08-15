@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <!-- Metadados da página -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ByteBurguer</title>
+
+    <!-- Importa o arquivo de estilos CSS para o login -->
+    <link rel="stylesheet" href="/css/login.css" type="text/css" />
+
+    <!-- Importa a biblioteca de ícones Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/cf6fa412bd.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- Container principal da página -->
+    <div class="container">
+      <!-- Botões para alternar entre os formulários de login e registro -->
+      <div class="buttonsForm">
+        <div class="btnColor"></div>
+        <button id="btnSignin">Entrar</button>
+        <button id="btnSignup">Cadastrar</button>
+      </div>
+
+      <!-- Formulário de login -->
+      <form id="signin" action="/auth" method="post">
+        <!-- Campos de entrada para email e senha -->
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+        />
+        <i class="fas fa-envelope iEmail"></i>
+        <input
+          id="senha"
+          name="senha"
+          type="password"
+          placeholder="senha"
+          required
+        />
+        <i class="fas fa-lock iPasswordLogin"></i>
+
+        <!-- Checkbox para lembrar senha -->
+        <div class="divCheck">
+          <input type="checkbox" />
+          <span>Lembrar senha</span>
+        </div>
+
+        <!-- Botão de submissão do formulário -->
+        <button type="submit">Entrar</button>
+      </form>
+
+      <!-- Formulário de registro -->
+      <form id="signup" action="/register" method="post">
+        <!-- Campos de entrada para email, nome e senha (repetido) -->
+        <input
+          type="email"
+          placeholder="Email"
+          required
+          name="email"
+          id="signupEmail"
+        />
+        <i class="fas fa-envelope iEmail"></i>
+
+        <input type="text" placeholder="Nome" required name="nome" id="nome" />
+        <i class="fas fa-solid fa-user iNome"></i>
+
+        <input
+          type="password"
+          placeholder="senha"
+          required
+          name="senha"
+          id="senha"
+        />
+        <i class="fas fa-lock iPassword"></i>
+
+        <input
+          type="password"
+          placeholder="senha"
+          required
+          name="senha"
+          id="senha"
+        />
+        <i class="fas fa-lock iPassword2"></i>
+
+        <!-- Botão de submissão do formulário -->
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
+
+    <!-- Script JavaScript para interação com a página -->
+    <script src="../../javascripts/login.js"></script>
+  </body>
+</html>
