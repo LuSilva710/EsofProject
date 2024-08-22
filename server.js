@@ -1,6 +1,6 @@
 var express = require("express");
 const session = require("express-session");
-const mysql = require("mysql");
+const mysql = require("mysql2");
 var connection_data = require("./connections.json");
 const connection = mysql.createConnection(connection_data);
 const { createHash } = require("crypto");
@@ -60,8 +60,6 @@ app.post("/auth", function (req, res) {
       function (error, results, fields) {
         if (error) throw error;
         if (results.length > 0) {
-          console.log(cripted_pass);
-          console.log(results.senha);
 
           req.session.loggedin = true;
           req.session.username = email;
