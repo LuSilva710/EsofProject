@@ -6,7 +6,16 @@ const connection = mysql.createConnection(connection_data);
 const { createHash } = require("crypto");
 var app = express();
 
-// Set the view engine to EJS
+// Conectando ao banco de dados
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
+  }
+  console.log('Connected to the database.');
+});
+
+// Configurando o view engine
 app.set("view engine", "ejs");
 app.use(
   session({
@@ -20,10 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./public"));
 app.set("views", "./views");
 
-// Variável para armazenar o carrinho de compras (em memória)
-let carrinho = [];
-
-// Login page
+// Rota de login
 app.get("/", function (req, res) {
   res.render("pages/login");
 });
@@ -34,30 +40,63 @@ app.get("/home", function (req, res) {
       if (error) throw error;
       connection.query('SELECT * FROM tipos_produto', (error, results2) => {
         if (error) throw error;
-        console.log(results2)
         res.render('pages/home', { produtos: results, tipos : results2 });
       })
   });
 });
 
+app.post("/insere_carrinho", function(req, res) {
+  connection.query(
+    "SELECT * FROM usuario WHERE email = ?",
+    [req.session.username],
+    function (error, results, fields) {
+      if (error) {
+        console.error("Erro na query:", error);
+        res.send("Ocorreu um erro durante a autenticação.");
+        return;
+      }
+      connection.query(
+        "INSERT INTO carrinho (id_usuario, id_produto, add_em, finalizado) VALUES(?, ?, CURRENT_TIMESTAMP(), 0);",
+        [Number(results[0].id_usuario), Number(req.body.id_produto)],
+        function (error, results, fields) {
+          if (error) {
+            console.error("Erro na query:", error);
+            res.send("Ocorreu um erro durante a autenticação.");
+            return;
+          }
+          return;
+        });
+    });
+
+})
+
 // Carrinho page
 app.get("/carrinho", function (req, res) {
-  res.render("pages/carrinho", { carrinho: carrinho });
+  console.log(req.session.username)
+
+  connection.query(
+    "SELECT COUNT(p.id_produto) AS quantidade, p.nome, p.valor, ROUND(COUNT(p.id_produto) * p.valor, 2) as total, p.link_imagem, t.tipo_produto FROM carrinho c "+ 
+    "JOIN usuario u ON u.id_usuario = c.id_usuario "+
+    "JOIN produto p ON p.id_produto = c.id_produto "+
+    "JOIN tipos_produto t ON t.id_tipos_produto = p.id_tipo "+
+    "WHERE u.email = ? "+
+    "GROUP BY p.nome, p.valor, p.link_imagem, t.tipo_produto;",
+    [req.session.username],
+    function (error, results, fields) {
+      if (error) {
+        console.error("Erro na query:", error);
+        res.send("Ocorreu um erro durante a autenticação.");
+        return;
+      }
+      res.render("pages/carrinho", { pedidos: results });
+    });
+ 
 });
 
-// Adiciona item ao carrinho
-app.post("/adicionarAoCarrinho", function (req, res) {
-  const item = req.body.item;
-  carrinho.push(item);
-  res.sendStatus(200); // Retorna um status 200 para indicar sucesso
-});
-
-// Database auth
 app.post("/auth", function (req, res) {
   let email = req.body.email;
   let password = req.body.senha;
-  console.log(email);
-  console.log(password);
+
   let cripted_pass = hash(email + password);
 
   if (email && password) {
@@ -65,13 +104,19 @@ app.post("/auth", function (req, res) {
       "SELECT * FROM usuario WHERE email = ?",
       [email],
       function (error, results, fields) {
-        if (error) throw error;
+        if (error) {
+          console.error("Erro na query:", error);
+          res.send("Ocorreu um erro durante a autenticação.");
+          return;
+        }
         if (results.length > 0) {
-
-          req.session.loggedin = true;
-          req.session.username = email;
-
-          res.redirect("/home");
+          if (results[0].senha === cripted_pass) {
+            req.session.loggedin = true;
+            req.session.username = email;
+            res.redirect("/home");
+          } else {
+            res.send("Email ou Senha Incorretos!");
+          }
         } else {
           res.send("Email ou Senha Incorretos!");
         }
@@ -79,35 +124,42 @@ app.post("/auth", function (req, res) {
       }
     );
   } else {
+    res.send("Por favor, preencha ambos os campos!");
     res.end();
   }
 });
 
+
 app.post("/register", function (req, res) {
   let username = req.body.nome;
-  let password = req.body.senha;
+  let password = req.body.senha[0];
   let email = req.body.email;
   let cripted_pass = hash(email + password);
 
   if (username && password && email) {
-    // Verifica se o e-mail já está cadastrado
     connection.query(
-      "SELECT * FROM hamburgueria.usuario WHERE email = ?",
+      "SELECT * FROM usuario WHERE email = ?",
       [email],
       function (error, results, fields) {
-        if (error) throw error;
+        if (error) {
+          console.error("Erro na query:", error);
+          res.send("Ocorreu um erro durante o registro.");
+          return;
+        }
 
         if (results.length > 0) {
-          // O e-mail já está cadastrado
           res.send("Este e-mail já está cadastrado. Por favor, escolha outro.");
         } else {
-          // O e-mail não está cadastrado, então insere o novo usuário
           connection.query(
-            "INSERT INTO hamburgueria.usuario (nome, email, senha) VALUES(?, ?, ?);",
+            "INSERT INTO usuario (nome, email, senha) VALUES(?, ?, ?);",
             [username, email, cripted_pass],
             function (error, results, fields) {
-              if (error) throw error;
-              console.log(results);
+              if (error) {
+                console.error("Erro ao inserir novo usuário:", error);
+                res.send("Ocorreu um erro ao inserir o novo usuário.");
+                return;
+              }
+              console.log("Novo usuário registrado com sucesso:", results);
               res.redirect("/");
             }
           );

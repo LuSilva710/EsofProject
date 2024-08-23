@@ -46,98 +46,31 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <% pedidos.forEach(item => { %>
                         <tr>
                             <td>
                                 <div class="product">
-                                    <img style="width: 120px; height: 100px;" src="assets/bebida2.jpg" alt="">
+                                    <img style="width: 120px; height: 100px;" src="<%= item.link_imagem %>" alt="">
                                     <div class="info">
-                                        <div class="name">Nome Do Produto</div>
-                                        <div class="category">Categoria</div>
+                                        <div class="name"><%= item.nome %></div>
+                                        <div class="category"><%= item.tipo_produto %></div>
                                     </div>
                                 </div>
                             </td>
-                            <td>R$2</td>
+                            <td>R$<%= item.valor %></td>
                             <td>
                                 <div class="qty">
                                     <button><i class='bx bx-minus'></i></button>
-                                    <span>0</span>
+                                    <span><%= item.quantidade %></span>
                                     <button><i class='bx bx-plus'></i></button>
                                 </div>
                             </td>
-                            <td>R$0</td>
+                            <td>R$<%= item.total %></td>
                             <td>
                                 <button class="remove"><i class='bx bx-x'></i></button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="product">
-                                    <img style="width: 120px; height: 100px;" src="assets/batata.jpeg" alt="">
-                                    <div class="info">
-                                        <div class="name">Nome Do Produto</div>
-                                        <div class="category">Categoria</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>R$0</td>
-                            <td>
-                                <div class="qty">
-                                    <button><i class='bx bx-minus'></i></button>
-                                    <span>0</span>
-                                    <button><i class='bx bx-plus'></i></button>
-                                </div>
-                            </td>
-                            <td>R$0</td>
-                            <td>
-                                <button class="remove"><i class='bx bx-x'></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product">
-                                    <img style="width: 120px; height: 100px;" src="assets/bebida4.jpg" alt="">
-                                    <div class="info">
-                                        <div class="name">Nome Do Produto</div>
-                                        <div class="category">Categoria</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>R$0</td>
-                            <td>
-                                <div class="qty">
-                                    <button><i class='bx bx-minus'></i></button>
-                                    <span>0</span>
-                                    <button><i class='bx bx-plus'></i></button>
-                                </div>
-                            </td>
-                            <td>R$0</td>
-                            <td>
-                                <button class="remove"><i class='bx bx-x'></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product">
-                                    <img style="width: 120px; height: 100px;" src="assets/combo.png" alt="">
-                                    <div class="info">
-                                        <div class="name">Nome Do Produto</div>
-                                        <div class="category">Categoria</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>R$0</td>
-                            <td>
-                                <div class="qty">
-                                    <button><i class='bx bx-minus'></i></button>
-                                    <span>0</span>
-                                    <button><i class='bx bx-plus'></i></button>
-                                </div>
-                            </td>
-                            <td>R$0</td>
-                            <td>
-                                <button class="remove"><i class='bx bx-x'></i></button>
-                            </td>
-                        </tr>
+                    <% }) %>
                     </tbody>
                 </table>
             </section>

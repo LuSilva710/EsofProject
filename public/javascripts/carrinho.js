@@ -103,9 +103,9 @@ function adicionarAoCarrinho(titulo, preco, imagem) {
 
 // Função para preencher a tabela do carrinho ao carregar a página
 function preencherCarrinho() {
-    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const carrinho = localStorage.getItem('pedidos') || {};
     const tbody = document.querySelector('tbody');
-
+    console.log(pedidos)
     // Limpa a tabela antes de preencher
     tbody.innerHTML = '';
 
@@ -113,8 +113,8 @@ function preencherCarrinho() {
 
     // Percorre os produtos do carrinho e adiciona à tabela
     carrinho.forEach(item => {
-        if (item.preco && !isNaN(item.preco)) { // Verifica se o preço é válido
-            const total = item.preco * item.quantidade;
+        if (item.valor && !isNaN(item.valor)) { // Verifica se o preço é válido
+            const total = item.valor * item.quantidade;
             subtotal += total;
 
         const tr = document.createElement('tr');
@@ -123,22 +123,22 @@ function preencherCarrinho() {
                 <div class="product">
                     <img style="width: 120px; height: 100px;" src="${item.imagem}" alt="">
                     <div class="info">
-                        <div class="name">${item.titulo}</div>
+                        <div class="name">${item.nome}</div>
                         <div class="category">Categoria</div>
                     </div>
                 </div>
             </td>
-            <td>R$${item.preco}</td>
+            <td>R$${item.valor}</td>
             <td>
                 <div class="qty">
-                    <button onclick="alterarQuantidade('${item.titulo}', -1)"><i class='bx bx-minus'></i></button>
+                    <button onclick="alterarQuantidade('${item.nome}', -1)"><i class='bx bx-minus'></i></button>
                     <span>${item.quantidade}</span>
-                    <button onclick="alterarQuantidade('${item.titulo}', 1)"><i class='bx bx-plus'></i></button>
+                    <button onclick="alterarQuantidade('${item.nome}', 1)"><i class='bx bx-plus'></i></button>
                 </div>
             </td>
             <td>R$${total.toFixed(2)}</td>
             <td>
-                <button class="remove" onclick="removerDoCarrinho('${item.titulo}')"><i class='bx bx-x'></i></button>
+                <button class="remove" onclick="removerDoCarrinho('${item.nome}')"><i class='bx bx-x'></i></button>
             </td>
         `;
         tbody.appendChild(tr);
