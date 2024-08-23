@@ -30,7 +30,14 @@ app.get("/", function (req, res) {
 
 // Home page
 app.get("/home", function (req, res) {
-  res.render("pages/home");
+    connection.query('SELECT * FROM produto', (error, results) => {
+      if (error) throw error;
+      connection.query('SELECT * FROM tipos_produto', (error, results2) => {
+        if (error) throw error;
+        console.log(results2)
+        res.render('pages/home', { produtos: results, tipos : results2 });
+      })
+  });
 });
 
 // Carrinho page

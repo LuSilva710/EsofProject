@@ -300,6 +300,11 @@
     padding: 1rem 0;
   }
 
+  #product_img{
+    height: 150px;
+    width: 100px;
+  }
+
   .dishes .box-container .box .stars i {
     color: var(--main-color);
     font-size: 1.7rem;
