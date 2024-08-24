@@ -312,6 +312,21 @@ header .icons #menu-bars {
   aside > button:hover {
     background-color: #fe9307;
   }/*# sourceMappingURL=style.css.map */
+
+  aside > #button {
+    border: 0;
+    padding: 15px 0px;
+    color: white;
+    background: black;
+    display: block;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 18px;
+  }
+  aside > #button:hover {
+    background-color: #fe9307;
+  }/*# sourceMappingURL=style.css.map */
   
 
 

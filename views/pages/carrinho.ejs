@@ -78,22 +78,23 @@
                     </tbody>
                 </table>
             </section>
-            <aside>
-                <div class="box">
-
-                    <div class="info">
-                        <div><span>Sub-Total</span><span>R$ 0</span></div>
-                        <div><span>Frete</span><span> Gratuito</span></div>
-                        <div><button>Adicionar Cupom De Desconto<i class='bx bx-right-arrow-alt'></i></button></div>
+            <form action="/checkout" method="post">
+                <aside>
+                    <div class="box">
+                        <div class="info">
+                            <div><span>Sub-Total</span><span><input type="text" value="R$ <%= valor_total %>"></span></div>
+                            <div><span>Frete</span><span> Gratuito</span></div>
+                            <div><button>Adicionar Cupom De Desconto<i class='bx bx-right-arrow-alt'></i></button></div>
+                        </div>
+                        <footer>
+                            <span>Total</span>
+                            <span><% valor_total %></span>
+                        </footer>
                     </div>
-                    <footer>
-                        <span>Total</span>
-                        <span>R$0</span>
-                    </footer>
-                </div>
-                <button>Finalizar Compra</button>
-                <button style="margin-top: 5px;" onclick="window.location.href='/home'">Voltar</button>
-            </aside>
+                    <input class='btn' type="submit" value="Finalizar Compra">
+                    <button style="margin-top: 5px;" onclick="window.location.href='/home'">Voltar</button>
+                </aside>
+            </form>
         </div>
     </main>
     <script src="javascripts/carrinho.js"></script>
