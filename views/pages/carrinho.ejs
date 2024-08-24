@@ -46,7 +46,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <% pedidos.forEach(item => { %>
+                    <% var valor_total = 0; 
+                        pedidos.forEach(item => { 
+                            valor_total = valor_total + item.total;
+                            %>
                         <tr>
                             <td>
                                 <div class="product">
@@ -70,7 +73,8 @@
                                 <button class="remove"><i class='bx bx-x'></i></button>
                             </td>
                         </tr>
-                    <% }) %>
+                    <% });
+                    console.log(valor_total) %>
                     </tbody>
                 </table>
             </section>

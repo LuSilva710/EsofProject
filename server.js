@@ -6,6 +6,15 @@ const connection = mysql.createConnection(connection_data);
 const { createHash } = require("crypto");
 var app = express();
 
+function requireLogin(req, res, next) {
+  if (req.session.username) {
+    next(); // O usuário está logado, continue para a próxima função de middleware ou rota
+  } else {
+    res.redirect("/"); // Redireciona para a página de login
+  }
+}
+
+
 // Conectando ao banco de dados
 connection.connect((err) => {
   if (err) {
@@ -35,7 +44,7 @@ app.get("/", function (req, res) {
 });
 
 // Home page
-app.get("/home", function (req, res) {
+app.get("/home",requireLogin ,function (req, res) {
     connection.query('SELECT * FROM produto', (error, results) => {
       if (error) throw error;
       connection.query('SELECT * FROM tipos_produto', (error, results2) => {
@@ -45,7 +54,7 @@ app.get("/home", function (req, res) {
   });
 });
 
-app.post("/insere_carrinho", function(req, res) {
+app.post("/insere_carrinho",requireLogin, function(req, res) {
   connection.query(
     "SELECT * FROM usuario WHERE email = ?",
     [req.session.username],
@@ -71,9 +80,9 @@ app.post("/insere_carrinho", function(req, res) {
 })
 
 // Carrinho page
-app.get("/carrinho", function (req, res) {
+app.get("/carrinho",requireLogin, function (req, res) {
   console.log(req.session.username)
-
+  
   connection.query(
     "SELECT COUNT(p.id_produto) AS quantidade, p.nome, p.valor, ROUND(COUNT(p.id_produto) * p.valor, 2) as total, p.link_imagem, t.tipo_produto FROM carrinho c "+ 
     "JOIN usuario u ON u.id_usuario = c.id_usuario "+
