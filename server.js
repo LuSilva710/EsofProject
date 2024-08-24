@@ -40,7 +40,7 @@ app.get("/home", function (req, res) {
       if (error) throw error;
       connection.query('SELECT * FROM tipos_produto', (error, results2) => {
         if (error) throw error;
-        res.render('pages/home', { produtos: results, tipos : results2 });
+        res.render('pages/home', { produtos: results, tipos: results2 });
       })
   });
 });
