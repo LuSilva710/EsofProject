@@ -54,6 +54,7 @@ app.get("/home",requireLogin ,function (req, res) {
   });
 });
 
+//rota para inserir produtos no carrinho
 app.post("/insere_carrinho",requireLogin, function(req, res) {
   connection.query(
     "SELECT * FROM usuario WHERE email = ?",
@@ -84,12 +85,12 @@ app.get("/carrinho",requireLogin, function (req, res) {
   console.log(req.session.username)
   
   connection.query(
-    "SELECT COUNT(p.id_produto) AS quantidade, p.nome, p.valor, ROUND(COUNT(p.id_produto) * p.valor, 2) as total, p.link_imagem, t.tipo_produto FROM carrinho c "+ 
+    "SELECT COUNT(p.id_produto) AS quantidade, p.id_produto, p.nome, p.valor, ROUND(COUNT(p.id_produto) * p.valor, 2) as total, p.link_imagem, t.tipo_produto FROM carrinho c "+ 
     "JOIN usuario u ON u.id_usuario = c.id_usuario "+
     "JOIN produto p ON p.id_produto = c.id_produto "+
     "JOIN tipos_produto t ON t.id_tipos_produto = p.id_tipo "+
     "WHERE u.email = ? "+
-    "GROUP BY p.nome, p.valor, p.link_imagem, t.tipo_produto;",
+    "GROUP BY p.id_produto, p.nome, p.valor, p.link_imagem, t.tipo_produto;",
     [req.session.username],
     function (error, results, fields) {
       if (error) {
@@ -179,6 +180,14 @@ app.post("/register", function (req, res) {
     res.send("Envie todas as credenciais!");
     res.end();
   }
+});
+
+app.post("/checkout", requireLogin, function(req, res){
+  console.log("Valor chegou no server")
+  var itens_obj_json = req.body.data_json;
+  var itens_obj = JSON.parse(itens_obj_json);
+
+  console.log(itens_obj);
 });
 
 app.listen(8080);

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Hamburgueria</title>
+    <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+    <div class="container-finalizacao">
+        <h1>Finalizar Pedido</h1>
+        
+        <!-- Resumo do Pedido -->
+        <div class="resumo-pedido">
+            <h2>Resumo do Pedido</h2>
+            <p>Total: <span id="valor-total">R$ 150,00</span></p>
+        </div>
+
+        <!-- Método de Pagamento -->
+        <div class="metodo-pagamento">
+            <button id="botao-pix" data-pagamento="pix">PIX</button>
+            <button id="botao-boleto" data-pagamento="boleto">Boleto</button>
+            <button id="botao-cartao" data-pagamento="cartao-credito">Cartão de Crédito</button>
+        </div>
+
+        <!-- Dados do Cartão de Crédito -->
+        <div class="info-cartao">
+            <h3>Informações do Cartão de Crédito</h3>
+            <label for="numero-cartao">Número do Cartão:</label>
+            <input type="text" id="numero-cartao" name="numero-cartao" placeholder="1234 5678 9123 4567">
+            <label for="nome-cartao">Nome no Cartão:</label>
+            <input type="text" id="nome-cartao" name="nome-cartao" placeholder="Nome Completo">
+            <label for="validade-cartao">Validade:</label>
+            <input type="text" id="validade-cartao" name="validade-cartao" placeholder="MM/AA">
+            <label for="cvc-cartao">CVC:</label>
+            <input type="text" id="cvc-cartao" name="cvc-cartao" placeholder="123">
+        </div>
+
+        <!-- Endereço de Entrega -->
+        <div class="endereco-entrega">
+            <h2>Endereço de Entrega</h2>
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Rua, Número, Complemento">
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" name="cidade" placeholder="Cidade">
+            <label for="estado">Estado:</label>
+            <input type="text" id="estado" name="estado" placeholder="Estado">
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" placeholder="00000-000">
+        </div>
+
+        <!-- Botão de Finalização -->
+        <button id="botao-finalizar">Finalizar Compra</button>
+    </div>
+    <script src="javascripts/checkout.js"></script>
+</body>
+</html>

@@ -34,6 +34,8 @@
     <main>
         <div class="page-title">Seu Carrinho</div>
         <div class="content">
+            <% var itens_obj = {}; 
+            var resultado;%>
             <section>
                 <table>
                     <thead>
@@ -46,9 +48,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <% var valor_total = 0; 
-                        pedidos.forEach(item => { 
+                    <%  var valor_total = 0;
+                        var itens_obj = {};
+                        pedidos.forEach((item, index) => { 
                             valor_total = valor_total + item.total;
+                            itens_obj[index + 1] = {
+                                "id_produto": item.id_produto,
+                                "nome": item.nome,
+                                "valor": item.valor,
+                                "quantidade": item.quantidade
+                            };
                             %>
                         <tr>
                             <td>
@@ -74,7 +83,10 @@
                             </td>
                         </tr>
                     <% });
-                    console.log(valor_total) %>
+                    console.log(itens_obj);
+                    console.log(valor_total);
+                    resultado = JSON.stringify(itens_obj); 
+                    console.log(resultado)%>
                     </tbody>
                 </table>
             </section>
@@ -85,6 +97,7 @@
                             <div><span>Sub-Total</span><span><input type="text" value="R$ <%= valor_total %>"></span></div>
                             <div><span>Frete</span><span> Gratuito</span></div>
                             <div><button>Adicionar Cupom De Desconto<i class='bx bx-right-arrow-alt'></i></button></div>
+                            <input type="hidden" name="data_json" id="data_json" value="<%= resultado %>">
                         </div>
                         <footer>
                             <span>Total</span>
