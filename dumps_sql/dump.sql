@@ -57,7 +57,7 @@ CREATE TABLE `pedidos` (
 
 DROP TABLE IF EXISTS `carrinho`;
 CREATE TABLE `carrinho` (
-  `id_carrinho` int NOT NULL,
+  `id_carrinho` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int DEFAULT NULL,
   `id_produto` int DEFAULT NULL,
   `add_em` timestamp NULL DEFAULT NULL,

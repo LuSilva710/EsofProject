@@ -186,8 +186,10 @@ app.post("/checkout", requireLogin, function(req, res){
   console.log("Valor chegou no server")
   var itens_obj_json = req.body.data_json;
   var itens_obj = JSON.parse(itens_obj_json);
-
+  itens_obj['1'].va
   console.log(itens_obj);
+  res.render("pages/checkout" , {itens : itens_obj})
+
 });
 
 app.listen(8080);
