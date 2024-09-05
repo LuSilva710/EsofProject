@@ -383,6 +383,49 @@
   }
 
   .menu .box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adiciona espaçamento entre os itens */
+    justify-content: center;
+  }
+  
+  .menu .box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px; /* Define uma largura padrão */
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .menu .box:hover {
+    transform: translateY(-10px); /* Animação ao passar o mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .menu .box img {
+    width: 100%; /* Garante que as imagens usem a largura total do contêiner */
+    height: 200px; /* Altura fixa para uniformizar todas as imagens */
+    object-fit: cover; /* Ajusta a imagem para cobrir o espaço sem distorção */
+    border-bottom: 1px solid #ddd; /* Adiciona uma borda inferior */
+  }
+  
+  .menu .box .content {
+    padding: 10px;
+  }
+  
+  .menu .box .content .price {
+    display: block;
+    font-size: 18px;
+    color: #e63946;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  /* .menu .box-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     gap: 1.5rem;
@@ -407,7 +450,7 @@
     height: 100%;
     width: 100%;
     border-radius: .5rem;
-  }
+  } */
 
   .menu .box-container .box .image .fa-heart {
     position: absolute;

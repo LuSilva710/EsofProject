@@ -40,6 +40,11 @@ CREATE TABLE `produto` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='tabela que irá armazenar os produtos do site';
 LOCK TABLES `produto` WRITE;
 INSERT INTO `produto` VALUES (1,'BytePork','Hamburguer de porco com chedar e bacon defumado','https://cdn.pixabay.com/photo/2020/12/13/22/48/hamburguer-5829560_1280.jpg',27.99,1,'2024-08-23 01:02:13'),(2,'ByteLancheFeliz','Hamburguer bovino com chedar, maionese temperada e muito amor e felicidade','https://cdn.pixabay.com/photo/2017/02/09/14/09/kebab-2052491_1280.jpg',31.5,1,'2024-08-23 01:37:44');
+UPDATE `hamburgueria`.`produto` SET `valor` = '45' WHERE (`id_produto` = '3');
+UPDATE `hamburgueria`.`produto` SET `valor` = '65' WHERE (`id_produto` = '4');
+UPDATE `hamburgueria`.`produto` SET `valor` = '35' WHERE (`id_produto` = '5');
+
+
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pedidos`;
